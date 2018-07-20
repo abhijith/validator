@@ -1,0 +1,15 @@
+* schema validator
+* select queue (redis)
+* sinatra
+* dockerize
+* push to dockerhub
+* k8s manifest
+* run on minikube
+* documentation
+  - assumptions
+  - design
+  - trade-off
+  - extending / improvements
+* tests
+* liveness probe
+* readyness probe
