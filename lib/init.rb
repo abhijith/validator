@@ -1,6 +1,12 @@
 require 'json'
+require 'json-schema'
 require 'pp'
-require 'logger'
+require_relative 'logger'
 
-UnityLogger = Logger.new
-UnityLogger.level = ENV["LOG_LEVEL"] || Logger::INFO
+require_relative 'utils'
+require_relative 'unity'
+require_relative 'exceptions'
+require_relative 'schema'
+
+
+init_unix_format

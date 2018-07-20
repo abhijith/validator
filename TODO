@@ -1,15 +1,39 @@
-* schema validator
+* schema validator - DONE
+
 * select queue (redis)
-* sinatra
+
+* sinatra - DONE
+
 * dockerize
+
 * push to dockerhub
+
 * k8s manifest
+  - configmap
+    -> log-level
+    -> redis url
+
+  - deployment for app
+  - deployment for redis
+  - service for redis
+  - service for app
+
 * run on minikube
+
 * documentation
   - assumptions
   - design
   - trade-off
   - extending / improvements
-* tests
-* liveness probe
-* readyness probe
+
+* tests - WIP
+
+* liveness probe - DONE
+
+* readiness probe
+
+* json logging
+
+syntatically:
+valid -> curl -s --header "Content-Type: application/json" --request POST --data '{"username":"xyz","password":"xyz"}' http://localhost:4567/payload -o /dev/null -w "%{http_code}"
+invalid -> curl -s --header "Content-Type: application/json" --request POST --data '{"username":"xyz","password":"xyz"' http://localhost:4567/payload -o /dev/null -w "%{http_code}"
