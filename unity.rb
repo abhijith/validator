@@ -19,7 +19,6 @@ def rescuing
 end
 
 get '/' do
-  ENV.to_h.to_json
 end
 
 delete '/flush' do
