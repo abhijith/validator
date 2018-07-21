@@ -2,6 +2,7 @@ require_relative 'init'
 require 'redis-queue'
 
 class Unity
+
   attr_accessor :schema, :queue, :redis
 
   def initialize(schema, host: nil, port: nil)
