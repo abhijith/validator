@@ -1,23 +1,25 @@
 require_relative 'lib/init'
 require 'sinatra'
 
+set :bind, '0.0.0.0'
 set :app, Unity.new(SCHEMA, host: ENV['host'] || 'localhost', port: ENV['port'] || 6379)
 
 def rescuing
-  begin
+  #begin
     content_type :json
     status 200
 
     res = yield if block_given?
-  rescue StandardError => e
-    status 500
-    e.message.to_json
-  end
+  #rescue StandardError => e
+  #  status 500
+  #  e.message.to_json
+  #end
 
   res.to_json
 end
 
 get '/' do
+  ENV.to_h.to_json
 end
 
 delete '/flush' do

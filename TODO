@@ -47,4 +47,4 @@ curl -X GET localhost:4567/ready ; echo
 
 valid payload:
 
-curl --request POST --data "{\"ts\":\"1530228282\",\"sender\":\"a\",\"message\":{\"foo\":\"bar\",\"baz\":\"bang\"},\"sent-from-ip\":\"10.0.0.1\",\"priority\":1}" http://localhost:4567/payl
+curl --request POST --data "{\"ts\":\"1530228282\",\"sender\":\"a\",\"message\":{\"foo\":\"bar\",\"baz\":\"bang\"},\"sent-from-ip\":\"10.0.0.1\",\"priority\":1}" http://localhost:4567/payload

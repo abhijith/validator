@@ -7,7 +7,7 @@ COPY Gemfile Gemfile.lock ./
 RUN bundle install
 COPY . .
 
-RUN cd test/ && ruby all.rb
+RUN cd test/ && ruby schema_test.rb
 
 EXPOSE 4567
 
