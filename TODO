@@ -1,20 +1,9 @@
-* pin gem versions
-
-* schema validator - DONE
-
-* select queue (redis)
-
-* sinatra - DONE
-
-* dockerize
-
-* push to dockerhub
-
+WIP:
+----
 * k8s manifest
   - configmap
     -> log-level
     -> redis url
-
   - deployment for app
   - deployment for redis
   - service for redis
@@ -22,20 +11,36 @@
 
 * run on minikube
 
+* json logging
+
+* push to dockerhub
+
 * documentation
   - assumptions
   - design
   - trade-off
   - extending / improvements
 
-* tests - WIP
+DONE:
+-----
+* pin gem versions - DONE
+
+* schema validator - DONE
+
+* select queue (redis) - DONE
+
+* sinatra - DONE
+
+* dockerize - DONE
+
+* tests - DONE
 
 * liveness probe - DONE
 
-* readiness probe
+* readiness probe - DONE
 
-* json logging
-
+NOTES:
+------
 syntatically:
 
 valid -> curl -s --header "Content-Type: application/json" --request POST --data '{"username":"xyz","password":"xyz"}' http://localhost:4567/payload -w "\n%{http_code}\n" ; echo
