@@ -4,3 +4,4 @@ source "https://rubygems.org"
 gem "json-schema"
 gem 'sinatra'
 gem 'rack-test'
+gem 'redis-queue'

@@ -1,3 +1,5 @@
+* pin gem versions
+
 * schema validator - DONE
 
 * select queue (redis)
@@ -35,5 +37,10 @@
 * json logging
 
 syntatically:
+
 valid -> curl -s --header "Content-Type: application/json" --request POST --data '{"username":"xyz","password":"xyz"}' http://localhost:4567/payload -o /dev/null -w "%{http_code}"
 invalid -> curl -s --header "Content-Type: application/json" --request POST --data '{"username":"xyz","password":"xyz"' http://localhost:4567/payload -o /dev/null -w "%{http_code}"
+
+curl -X GET localhost:4567/
+curl -X GET localhost:4567/alive
+curl -X GET localhost:4567/ready
