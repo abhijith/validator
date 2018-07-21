@@ -4,9 +4,11 @@ services:
     image: unity:v3
     build: .
     ports:
-    - "4567:4567"
+    - "0.0.0.0:4567:4567"
     depends_on:
       - "redis"
+    environment:
+      - HOST=redis
     networks:
       - unity
   redis:
