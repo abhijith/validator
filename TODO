@@ -1,3 +1,15 @@
+PROBLEM STATEMENT:
+
+Part 2 - Dockerize It:
+----------------------
+Write a Dockerfile to produce a container that will run your service, and one to spin up an
+instance of the queue you used in Part 1
+
+Part 3 - Kubeify it:
+--------------------
+Write Kubernetes manifests to create a Service and Deployment object for both your service
+and the queue
+
 WIP:
 ----
 * k8s manifest
@@ -9,17 +21,17 @@ WIP:
   - service for redis
   - service for app
 
-* run on minikube
-
-* json logging
-
-* push to dockerhub
+* MAINTAINER, LABEL etc for dockerfile
 
 * documentation
   - assumptions
   - design
   - trade-off
   - extending / improvements
+
+* push to dockerhub
+
+* json logging
 
 DONE:
 -----
