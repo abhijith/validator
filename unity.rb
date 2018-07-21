@@ -1,6 +1,8 @@
 require_relative 'lib/init'
 require 'sinatra'
 
+set :app, Unity.new(SCHEMA, host: ENV['host'] || 'localhost', port: ENV['port'] || 6379)
+
 def rescuing
   begin
     content_type :json
@@ -9,7 +11,6 @@ def rescuing
     res = yield if block_given?
   rescue StandardError => e
     status 500
-    p e
     e.message.to_json
   end
 
@@ -17,6 +18,10 @@ def rescuing
 end
 
 get '/' do
+end
+
+delete '/flush' do
+  settings.app.flush
 end
 
 get '/alive' do
@@ -28,28 +33,21 @@ end
 
 get '/ready' do
   rescuing do
-    # considered ready if we can make connection to queue
-    true
+    settings.app.ready?
   end
 end
 
 post '/payload' do
   rescuing do
-    # is syntactically valid json
-    # is valid payload
     begin
       req = JSON.parse(request.body.read)
 
       status 200
       UnityLogger.info("Payload: #{req}")
-      res = main(req)
+      res = settings.app.process(req)
       UnityLogger.info("Response: #{res}")
       res
     rescue JSON::ParserError => e
-      status 400
-      UnityLogger.error(e.message)
-      nil
-    rescue InvalidPayload => e
       status 400
       UnityLogger.error(e.message)
       nil

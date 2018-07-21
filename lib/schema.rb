@@ -39,5 +39,5 @@ def init_unix_format
 end
 
 def payload_valid?(schema, payload)
-  JSON::Validator.validate(payload, schema, :version => :draft4 )
+  JSON::Validator.validate(schema, payload, :version => :draft4 )
 end

@@ -13,8 +13,8 @@ class SchemaTest < Test::Unit::TestCase
       }
     }
 
-    payload_valid?(s, { "sender" => "a" })
-    payload_valid?(s, { "sender" => 1 })
+    assert_equal true, payload_valid?(s, { "sender" => "a" })
+    assert_equal false, payload_valid?(s, { "sender" => 1 })
   end
 
   def test_message
@@ -38,10 +38,10 @@ class SchemaTest < Test::Unit::TestCase
       },
     }
 
-    payload_valid?(s, { "message" => { "foo" => "bar", "baz" => "bang" }})
-    payload_valid?(s, { "message" => { "foo" => "bar"}})
-    payload_valid?(s, { "message" => { "baz" => "bang" }})
-    payload_valid?(s, { "message" => { "foo" => "bar", "baz" => "bang", "wrong" => 1 }})
+    assert_equal true, payload_valid?(s, { "message" => { "foo" => "bar", "baz" => "bang" }})
+    assert_equal true, payload_valid?(s, { "message" => { "foo" => "bar"}})
+    assert_equal true, payload_valid?(s, { "message" => { "baz" => "bang" }})
+    assert_equal false, payload_valid?(s, { "message" => { "foo" => "bar", "baz" => "bang", "wrong" => 1 }})
   end
 
   def test_sent_from_ip
@@ -55,13 +55,13 @@ class SchemaTest < Test::Unit::TestCase
       }
     }
 
-    payload_valid?(s, {"sent-from-ip" => "10.0.0.1"})
-    payload_valid?(s, {})
-    payload_valid?(s, {"sent-from-ip" => "255.255.255.256"})
-    payload_valid?(s, {"sent-from-ip" => "::1"})
-    payload_valid?(s, {"sent-from-ip" => "1"})
-    payload_valid?(s, {"sent-from-ip" => 1})
-    payload_valid?(s, {"sent-from-ip" => :a})
+    assert_equal true, payload_valid?(s, {"sent-from-ip" => "10.0.0.1"})
+    assert_equal true, payload_valid?(s, {})
+    assert_equal false, payload_valid?(s, {"sent-from-ip" => "255.255.255.256"})
+    assert_equal false, payload_valid?(s, {"sent-from-ip" => "::1"})
+    assert_equal false, payload_valid?(s, {"sent-from-ip" => "1"})
+    assert_equal false, payload_valid?(s, {"sent-from-ip" => 1})
+    assert_equal false, payload_valid?(s, {"sent-from-ip" => :a})
   end
 
   def test_priority
@@ -74,11 +74,11 @@ class SchemaTest < Test::Unit::TestCase
       }
     }
 
-    payload_valid?(s, {"priority" => 1})
-    payload_valid?(s, {})
-    payload_valid?(s, {"priority" => -1})
-    payload_valid?(s, {"priority" => -1})
-    payload_valid?(s, { "priority" => "" })
+    assert_equal true, payload_valid?(s, {"priority" => 1})
+    assert_equal true, payload_valid?(s, {})
+    assert_equal true, payload_valid?(s, {"priority" => -1})
+    assert_equal true, payload_valid?(s, {"priority" => -1})
+    assert_equal false, payload_valid?(s, { "priority" => "" })
   end
 
   def test_ts
@@ -91,50 +91,50 @@ class SchemaTest < Test::Unit::TestCase
       }
     }
 
-    payload_valid?(s, { "ts" => "1530228282" })
-    payload_valid?(s, { "ts" => "-1530228282" })
-    payload_valid?(s, { "ts" => "3147483649x" })
-    payload_valid?(s, { "ts" => "x3147483648" })
+    assert_equal true, payload_valid?(s, { "ts" => "1530228282" })
+    assert_equal true, payload_valid?(s, { "ts" => "-1530228282" })
+    assert_equal false, payload_valid?(s, { "ts" => "3147483649x" })
+    assert_equal false, payload_valid?(s, { "ts" => "x3147483648" })
   end
 
   def test_payload_structure
     s = SCHEMA
 
     # timestamp
-    payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
-    payload_valid?(s, { "ts" => "-1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
-    payload_valid?(s, { "ts" => "x1530228282x", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
-    payload_valid?(s, { "ts" => "asdf", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
+    assert_equal true, payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
+    assert_equal true, payload_valid?(s, { "ts" => "-1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
+    assert_equal false, payload_valid?(s, { "ts" => "x1530228282x", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
+    assert_equal false, payload_valid?(s, { "ts" => "asdf", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
 
     # sender
-    payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
-    payload_valid?(s, { "ts" => "1530228282", "sender" => 1, "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
-    payload_valid?(s, { "ts" => "1530228282", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
+    assert_equal true, payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
+    assert_equal false, payload_valid?(s, { "ts" => "1530228282", "sender" => 1, "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
+    assert_equal false, payload_valid?(s, { "ts" => "1530228282", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
 
     # message
-    payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
-    payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
-    payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar" }, "sent-from-ip" => "10.0.0.1"})
-    payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "sent-from-ip" => "10.0.0.1"})
+    assert_equal true, payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
+    assert_equal true, payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
+    assert_equal true, payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar" }, "sent-from-ip" => "10.0.0.1"})
+    assert_equal false, payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "sent-from-ip" => "10.0.0.1"})
 
     # extra attribute(s) in message
-    payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang", "foobar" => "invalid" }, "sent-from-ip" => "10.0.0.1"})
+    assert_equal false, payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang", "foobar" => "invalid" }, "sent-from-ip" => "10.0.0.1"})
 
     # sent-from-ip
-    payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
-    payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }})
-    payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "256.256.256.256"})
+    assert_equal true, payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
+    assert_equal true, payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }})
+    assert_equal false, payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "256.256.256.256"})
 
     # priority
-    payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1", "priority" => 1 })
-    payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
-    payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1", "priority" => "a" })
+    assert_equal true, payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1", "priority" => 1 })
+    assert_equal true, payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
+    assert_equal false, payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1", "priority" => "a" })
 
     # extra attributes at top level
-    payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1", "priority" => 1, "sneaked-in" => true })
+    assert_equal false, payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1", "priority" => 1, "sneaked-in" => true })
 
     # ideal payload
-    payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1", "priority" => 1 })
+    assert_equal true, payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1", "priority" => 1 })
   end
 
 end
