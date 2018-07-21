@@ -1,45 +1,66 @@
 require_relative 'init'
 require 'redis-queue'
 
-class Unity
+class Kueue
+  attr_accessor :queue, :redis
 
-  attr_accessor :schema, :queue, :redis
-
-  def initialize(schema, host: nil, port: nil)
-    @schema = schema
+  def initialize(host: nil, port: nil)
     if host and port
       @redis = Redis.new(host: host, port: port)
       @queue = Redis::Queue.new('source','sink',  :redis => redis)
     else
       @redis = nil
     end
+  end
 
-    self
+  def inited?
+    not (queue.nil? or redis.nil?)
+  end
+
+  def pings?
+    begin
+      redis.ping == "PONG"
+    rescue Redis::CannotConnectError => e
+      false
+    end
+  end
+
+  def ready?
+    inited? and pings?
   end
 
   def flush
     redis.flushall if ready?
   end
 
-  def queue_inited?
-    not (queue.nil? or redis.nil?)
+  def push(x)
+    queue.push(x)
+  end
+
+end
+
+class Unity
+  attr_accessor :schema, :queue
+
+  def initialize(schema, host: nil, port: nil)
+    @schema = schema
+    if host and port
+      @queue = Kueue.new(host: host, port: port)
+    end
+
+    self
+  end
+
+  def flush
+    queue.flush if ready?
   end
 
   def alive?
     true
   end
 
-  def queue_ready?
-    begin
-      redis.ping == "PONG"
-    rescue Redis::CannotConnectError => e
-      UnityLogger.info("queue not ready")
-      false
-    end
-  end
-
   def ready?
-    queue_inited? and queue_ready?
+    queue.ready?
   end
 
   def process(payload)
@@ -48,6 +69,7 @@ class Unity
         queue.push(payload)
         true
       else
+        UnityLogger.info("queue not initialized or is not reachable")
         false
       end
       true
