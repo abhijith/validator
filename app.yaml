@@ -30,9 +30,9 @@ spec:
               port: http
           resources:
             limits:
-              memory: "800Mi"
-            requests:
               memory: "500Mi"
+            requests:
+              memory: "100Mi"
           envFrom:
           - configMapRef:
               name: unity
