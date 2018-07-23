@@ -28,6 +28,11 @@ spec:
               scheme: HTTP
               path: /alive
               port: http
+          resources:
+            limits:
+              memory: "800Mi"
+            requests:
+              memory: "500Mi"
           envFrom:
           - configMapRef:
               name: unity
