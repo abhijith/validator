@@ -12,8 +12,6 @@ and the queue
 
 WIP:
 ----
-* MAINTAINER, LABEL etc for dockerfile
-
 * documentation
   - assumptions
   - design
@@ -24,6 +22,8 @@ WIP:
 
 DONE:
 -----
+* MAINTAINER, LABEL, dockerignore - DONE
+
 * push to dockerhub - DONE
 
 * k8s manifest  - DONE
