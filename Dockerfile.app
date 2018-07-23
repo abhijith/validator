@@ -1,5 +1,7 @@
 FROM ruby:2.3.7-slim-jessie
 
+LABEL Maintainer=Abhijith
+
 WORKDIR /app
 
 COPY Gemfile Gemfile.lock ./
