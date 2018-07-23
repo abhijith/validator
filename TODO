@@ -20,6 +20,10 @@ WIP:
 
 * json logging
 
+* log-level in configmap
+
+* SIGTERM and SIGTERM signal handling
+
 DONE:
 -----
 * MAINTAINER, LABEL, dockerignore - DONE
