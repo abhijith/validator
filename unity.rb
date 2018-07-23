@@ -2,7 +2,7 @@ require_relative 'lib/init'
 require 'sinatra'
 
 set :bind, '0.0.0.0'
-set :app, Unity.new(SCHEMA, host: ENV['HOST'] || 'localhost', port: ENV['PORT'] || 6379)
+set :app, Unity.new(SCHEMA, host: ENV['QUEUE_HOST'] || 'localhost', port: ENV['QUEUE_PORT'] || 6379)
 
 def rescuing
   #begin

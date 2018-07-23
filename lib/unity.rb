@@ -5,6 +5,11 @@ class Kueue
   attr_accessor :queue, :redis
 
   def initialize(host: nil, port: nil)
+    UnityLogger.info "host: #{host} port: #{port}"
+    puts "-"  * 10
+    puts "host: #{host} port: #{port}"
+    puts "-"  * 10
+
     if host and port
       @redis = Redis.new(host: host, port: port)
       @queue = Redis::Queue.new('source','sink',  :redis => redis)
