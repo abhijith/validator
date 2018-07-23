@@ -12,15 +12,6 @@ and the queue
 
 WIP:
 ----
-* k8s manifest
-  - configmap
-    -> log-level
-    -> redis url
-  - deployment for app
-  - deployment for redis
-  - service for redis
-  - service for app
-
 * MAINTAINER, LABEL etc for dockerfile
 
 * documentation
@@ -29,12 +20,21 @@ WIP:
   - trade-off
   - extending / improvements
 
-* push to dockerhub
-
 * json logging
 
 DONE:
 -----
+* push to dockerhub - DONE
+
+* k8s manifest  - DONE
+  - configmap
+    -> log-level
+    -> redis url
+  - deployment for app
+  - deployment for redis
+  - service for redis
+  - service for app
+
 * pin gem versions - DONE
 
 * schema validator - DONE
@@ -65,3 +65,4 @@ curl -X GET localhost:4567/ready ; echo
 valid payload:
 
 curl --request POST --data "{\"ts\":\"1530228282\",\"sender\":\"a\",\"message\":{\"foo\":\"bar\",\"baz\":\"bang\"},\"sent-from-ip\":\"10.0.0.1\",\"priority\":1}" http://localhost:4567/payload
+curl --request POST --data "{\"ts\":\"1530228282\",\"sender\":\"a\",\"message\":{\"foo\":\"bar\",\"baz\":\"bang\"},\"sent-from-ip\":\"10.0.0.30\",\"priority\":1}" http://localhost:3000/payload
