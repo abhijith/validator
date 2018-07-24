@@ -126,9 +126,13 @@ class SchemaTest < Test::Unit::TestCase
     assert_equal false, payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "256.256.256.256"})
 
     # priority
-    assert_equal true, payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1", "priority" => 1 })
-    assert_equal true, payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
-    assert_equal false, payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1", "priority" => "a" })
+    1.upto(5).each do |priority|
+      assert_equal true, payload_valid?(s, { "ts" => "1530228282", "sender" => "testy-test-service", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1", "priority" => priority })
+    end
+    assert_equal false, payload_valid?(s, { "ts" => "1530228282", "sender" => "testy-test-service", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1", "priority" => 6 })
+    assert_equal false, payload_valid?(s, { "ts" => "1530228282", "sender" => "testy-test-service", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1", "priority" => 0 })
+    assert_equal true, payload_valid?(s, { "ts" => "1530228282", "sender" => "testy-test-service", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})
+    assert_equal false, payload_valid?(s, { "ts" => "1530228282", "sender" => "testy-test-service", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1", "priority" => "a" })
 
     # extra attributes at top level
     assert_equal false, payload_valid?(s, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1", "priority" => 1, "sneaked-in" => true })

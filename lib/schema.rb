@@ -25,6 +25,8 @@ SCHEMA = {
     },
     "priority" => {
       "type" => "integer",
+        "maximum" => 5,
+        "minimum" => 1
     },
   },
   "additionalProperties" => false
