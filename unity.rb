@@ -12,7 +12,7 @@ def rescuing
     res = yield if block_given?
   rescue StandardError => e
     status 500
-    UnityLogger.error(self.backtrace.join("\n"))
+    UnityLogger.error(e.backtrace.join("\n"))
     e.message.to_json
   end
 
