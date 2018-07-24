@@ -1,38 +1,29 @@
 #### Project Structure
 
 ```
-	$ tree unity/
-
-	unity/
-	├── docker-compose.yml
-	├── Dockerfile.app
-	├── Dockerfile.queue
-	├── Gemfile
-	├── Gemfile.lock
-	├── k8s.yaml
-	├── lib
-	│   ├── init.rb
-	│   ├── logger.rb
-	│   ├── schema.rb
-	│   ├── unity.rb
-	│   └── utils.rb
-	├── README.md
-	├── test
-	│   ├── all.rb
-	│   ├── http_test.rb
-	│   ├── init.rb
-	│   ├── schema_test.rb
-	│   └── unity_test.rb
-	├── TODO
-	└── unity.rb
-
-2 directories, 19 files
 
 ```
-#### Install instructions
+#### Pre-requisites
 
+	* Docker
+	* k8s deployment or Minikube
 
-#### Running the Code
+#### Building the application
+
+	* ./build.sh
+
+#### Installing
+
+The image for the application has been pushed on hub.docker.com: abhijithg/unity:v1
+
+	* cd unity
+	* kubectl apply k8s.yaml
+
+#### Running
+
+	$ kubectl apply k8s.yaml
+	$ kubectl port-forward service/unity 3000:4567 & # or in a different tty
+	$ curl localhost:3000/alive # => true
 
 #### Example valid payload
 
@@ -104,8 +95,7 @@ result in the message being rejected.
 | /send  | POST   | None   | Accepts JSON payload and pushes into a queue if schema passes validation
 
 
-#### Sample data for testing
-
-
-
 #### Extending and other ideas
+
+* signal handling
+* json logging
