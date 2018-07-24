@@ -37,7 +37,7 @@ class HttpTest < Test::Unit::TestCase
   end
 
   def assert_payload(expect, payload)
-    post '/payload', payload.to_json
+    post '/send', payload.to_json
     assert last_response.send(:ok?)
     assert_equal expect.to_s, last_response.body
   end
@@ -45,14 +45,14 @@ class HttpTest < Test::Unit::TestCase
   def test_main
     payload = { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1", "priority" => 1 }
 
-    post '/payload', payload.to_json
+    post '/send', payload.to_json
     assert last_response.send(:ok?)
 
-    post '/payload/', payload.to_json
+    post '/send/', payload.to_json
     assert last_response.send(:client_error?)
 
     payload = '{"ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1", "priority" => 1'
-    post '/payload/', payload
+    post '/send/', payload
     assert last_response.send(:client_error?)
 
     assert_payload(true, { "ts" => "1530228282", "sender" => "a", "message" => { "foo" => "bar", "baz" => "bang" }, "sent-from-ip" => "10.0.0.1"})

@@ -38,7 +38,7 @@ get '/ready' do
   end
 end
 
-post '/payload' do
+post '/send' do
   rescuing do
     begin
       req = JSON.parse(request.body.read)
