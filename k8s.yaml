@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: unity
-          image: abhijithgopal/unity:v2
+          image: abhijithg/unity:v1
           imagePullPolicy: Always
           ports:
           - containerPort: 4567
