@@ -13,8 +13,8 @@ SCHEMA = {
         {"required"=> ["baz"]}
       ],
       "properties" => {
-        "foo" => {"type" => "string", "optional" => true},
-        "baz" => {"type" => "string", "optional" => true},
+        "foo" => {"type" => "string"},
+        "baz" => {"type" => "string"},
       },
       "type" => "object",
       "additionalProperties" => false
