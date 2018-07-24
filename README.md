@@ -26,10 +26,18 @@
 	└── unity.rb
 
 ```
-#### Pre-requisites
 
-	* Docker
-	* k8s deployment or Minikube
+#### Environment Details
+
+* Platform: Linux
+
+* Docker
+  - client:	18.03.0-ce
+  - server:	18.03.0-ce
+
+* minikube version: v0.28.2
+  - server version: v1.10.0
+  - client version: v1.10.0
 
 #### Building the application
 
@@ -37,7 +45,7 @@
 
 #### Installing
 
-The image for the application has been pushed on hub.docker.com: abhijithg/unity:v1
+The image for the application has been pushed on hub.docker.com: `abhijithg/unity:v1`
 
 	* cd unity
 	* kubectl apply k8s.yaml
@@ -47,6 +55,17 @@ The image for the application has been pushed on hub.docker.com: abhijithg/unity
 	$ kubectl apply k8s.yaml
 	$ kubectl port-forward service/unity 3000:4567 & # or in a different tty
 	$ curl localhost:3000/alive # => true
+
+#### URLs exposed via the webserver
+
+|url     | type   | params | desc     |
+|:-------|:------:|:------:|:--------:|
+| /      | GET    | None   | Index
+| /flush | DELETE | None   | Clears the queue
+| /alive | GET    | None   | Check if WebServer end-point is accessible
+| /ready | GET    | None   | Check if Queue is accessible
+| /send  | POST   | None   | Accepts JSON payload and pushes into a queue if schema passes validation
+
 
 #### Example valid payload
 
@@ -91,31 +110,6 @@ The image for the application has been pushed on hub.docker.com: abhijithg/unity
 
 All fields not listed in the example above are invalid, and should
 result in the message being rejected.
-
-
-#### Components
-
-* WebServer
-
-* Schema validator
-
-* Queue abstraction / interface
-
-* Dockerfiles
-
-* Docker Compose Manifest
-
-* Kubernetes Manifest
-
-#### URLs exposed via the webserver
-
-|url     | type   | params | desc     |
-|:-------|:------:|:------:|:--------:|
-| /      | GET    | None   | Index
-| /flush | DELETE | None   | Clears the queue
-| /alive | GET    | None   | Check if WebServer end-point is accessible
-| /ready | GET    | None   | Check if Queue is accessible
-| /send  | POST   | None   | Accepts JSON payload and pushes into a queue if schema passes validation
 
 
 #### Extending and other ideas
