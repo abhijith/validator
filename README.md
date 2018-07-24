@@ -1,6 +1,29 @@
 #### Project Structure
 
 ```
+	.
+	├── .dockerignore
+	├── .gitignore
+	├── build.sh
+	├── docker-compose.yaml
+	├── Dockerfile.app
+	├── Dockerfile.queue
+	├── Gemfile
+	├── Gemfile.lock
+	├── k8s.yaml
+	├── lib
+	│   ├── init.rb
+	│   ├── logger.rb
+	│   ├── schema.rb
+	│   ├── unity.rb
+	│   └── utils.rb
+	├── README.md
+	├── test
+	│   ├── all.rb
+	│   ├── http_test.rb
+	│   ├── init.rb
+	│   └── schema_test.rb
+	└── unity.rb
 
 ```
 #### Pre-requisites
