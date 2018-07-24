@@ -6,9 +6,6 @@ class Kueue
 
   def initialize(host: nil, port: nil)
     UnityLogger.info "host: #{host} port: #{port}"
-    puts "-"  * 10
-    puts "host: #{host} port: #{port}"
-    puts "-"  * 10
 
     if host and port
       @redis = Redis.new(host: host, port: port)
@@ -71,15 +68,18 @@ class Unity
   def process(payload)
     if payload_valid?(schema, payload)
       if ready?
+        UnityLogger.info("En-queuing payload: #{payload}")
         queue.push(payload)
+        UnityLogger.info("Enqueued payload: #{payload}")
+
         true
       else
-        UnityLogger.info("queue not initialized or is not reachable")
+        UnityLogger.error("Queue not initialized or is not reachable")
         false
       end
       true
     else
-      UnityLogger.info("invalid payload #{payload}")
+      UnityLogger.info("Invalid payload: #{payload}")
       false
     end
   end
