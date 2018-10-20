@@ -5,7 +5,7 @@ class Kueue
   attr_accessor :queue, :redis
 
   def initialize(host: nil, port: nil)
-    UnityLogger.info "host: #{host} port: #{port}"
+    AppLogger.info "host: #{host} port: #{port}"
 
     if host and port
       @redis = Redis.new(host: host, port: port)
@@ -41,7 +41,7 @@ class Kueue
 
 end
 
-class Unity
+class App
   attr_accessor :schema, :queue
 
   def initialize(schema, host: nil, port: nil)
@@ -68,18 +68,18 @@ class Unity
   def process(payload)
     if payload_valid?(schema, payload)
       if ready?
-        UnityLogger.info("En-queuing payload: #{payload}")
+        AppLogger.info("En-queuing payload: #{payload}")
         queue.push(payload)
-        UnityLogger.info("Enqueued payload: #{payload}")
+        AppLogger.info("Enqueued payload: #{payload}")
 
         true
       else
-        UnityLogger.error("Queue not initialized or is not reachable")
+        AppLogger.error("Queue not initialized or is not reachable")
         false
       end
       true
     else
-      UnityLogger.info("Invalid payload: #{payload}")
+      AppLogger.info("Invalid payload: #{payload}")
       false
     end
   end

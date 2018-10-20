@@ -1,7 +1,7 @@
 version: "3"
 services:
   app:
-    image: unity:v1
+    image: app:v1
     build:
       context: ./
       dockerfile: Dockerfile.app
@@ -10,17 +10,17 @@ services:
     depends_on:
       - "redis"
     environment:
-      - HOST=redis
+      - QUEUE_HOST=redis
     networks:
-      - unity
+      - app
   redis:
     build:
       context: ./
       dockerfile: Dockerfile.queue
     image: redis
     networks:
-      - unity
+      - app
 
 networks:
-  unity:
+  app:
     driver: bridge

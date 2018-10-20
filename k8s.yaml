@@ -1,17 +1,17 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: unity
+  name: app
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: unity
+        name: app
     spec:
       containers:
-        - name: unity
-          image: abhijithg/unity:v1
+        - name: app
+          image: abhijithg/app:v1
           imagePullPolicy: Always
           ports:
           - containerPort: 4567
@@ -35,12 +35,12 @@ spec:
               memory: "100Mi"
           envFrom:
           - configMapRef:
-              name: unity
+              name: app
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: unity
+  name: app
   namespace: default
 spec:
   type: NodePort
@@ -49,12 +49,12 @@ spec:
     targetPort: 4567
     protocol: TCP
   selector:
-    name: unity
+    name: app
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: unity
+  name: app
 data:
   QUEUE_HOST: "redis.default.svc.cluster.local"
   QUEUE_PORT: "6379"

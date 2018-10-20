@@ -2,7 +2,7 @@ require_relative 'lib/init'
 require 'sinatra'
 
 set :bind, '0.0.0.0'
-set :app, Unity.new(SCHEMA, host: ENV['QUEUE_HOST'] || 'localhost', port: ENV['QUEUE_PORT'] || 6379)
+set :app, App.new(SCHEMA, host: ENV['QUEUE_HOST'] || 'localhost', port: ENV['QUEUE_PORT'] || 6379)
 
 def rescuing
   begin
@@ -12,7 +12,7 @@ def rescuing
     res = yield if block_given?
   rescue StandardError => e
     status 500
-    UnityLogger.error(e.backtrace.join("\n"))
+    AppLogger.error(e.backtrace.join("\n"))
     e.message.to_json
   end
 
@@ -49,13 +49,13 @@ post '/send' do
       req = JSON.parse(request.body.read)
 
       status 200
-      UnityLogger.info("Payload: #{req}")
+      AppLogger.info("Payload: #{req}")
       res = settings.app.process(req)
-      UnityLogger.info("Response: #{res}")
+      AppLogger.info("Response: #{res}")
       res
     rescue JSON::ParserError => e
       status 400
-      UnityLogger.error(e.message)
+      AppLogger.error(e.message)
       nil
     end
   end

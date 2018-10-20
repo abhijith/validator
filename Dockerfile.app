@@ -12,4 +12,4 @@ RUN cd test/ && ruby schema_test.rb
 
 EXPOSE 4567
 
-CMD ["bundle", "exec", "ruby", "unity.rb"]
+CMD ["bundle", "exec", "ruby", "app.rb"]

@@ -1,3 +1,5 @@
+#### JSON Schema validator sample application
+
 #### Example valid payload
 
 ```
@@ -59,7 +61,7 @@ result in the message being rejected.
 	│   ├── init.rb
 	│   ├── logger.rb
 	│   ├── schema.rb
-	│   ├── unity.rb
+	│   ├── app.rb
 	│   └── utils.rb
 	├── README.md
 	├── test
@@ -67,7 +69,7 @@ result in the message being rejected.
 	│   ├── http_test.rb
 	│   ├── init.rb
 	│   └── schema_test.rb
-	└── unity.rb
+	└── app.rb
 
 ```
 
@@ -89,15 +91,15 @@ result in the message being rejected.
 
 #### Installing
 
-The image for the application has been pushed on hub.docker.com: `abhijithg/unity:v1`
+The image for the application has been pushed on hub.docker.com: `abhijithg/app:v1`
 
-	* cd unity
+	* cd app
 	* kubectl apply k8s.yaml
 
 #### Running
 
 	$ kubectl apply k8s.yaml
-	$ kubectl port-forward service/unity 3000:4567 & # or in a different tty
+	$ kubectl port-forward service/app 3000:4567 & # or in a different tty
 	$ curl localhost:3000/alive # => true
 
 #### URLs exposed via the webserver
@@ -110,7 +112,7 @@ The image for the application has been pushed on hub.docker.com: `abhijithg/unit
 | /ready | GET    | None   | Check if Queue is accessible
 | /send  | POST   | None   | Accepts JSON payload and pushes into a queue if schema passes validation
 
-#### Extending and other ideas
+#### TODO
 
 * signal handling
 * json logging
